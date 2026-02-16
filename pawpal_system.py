@@ -138,16 +138,14 @@ class Scheduler:
         filtered = []
         constraints_lower = self.constraints.lower()
 
-        for task in tasks:
-            # Example constraint filtering by category
-            if "category:" in constraints_lower:
-                # Extract category from constraints (simple parsing)
-                category_constraint = constraints_lower.split("category:")[1].split()[0].strip()
+        # Example constraint filtering by category
+        if "category:" in constraints_lower:
+            # Extract category from constraints (simple parsing)
+            category_constraint = constraints_lower.split("category:")[1].split()[0].strip()
+            for task in tasks:
                 if task.category.lower() == category_constraint:
                     filtered.append(task)
-            else:
-                # If constraints don't match expected format, include all tasks
-                filtered.append(task)
-
-        # If no specific filtering was applied, return all tasks
-        return filtered if filtered else tasks
+            return filtered
+        else:
+            # If constraints don't match expected format, include all tasks
+            return tasks
